@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# 1. Change to your method's name or paper acronym
+name = "flower" 
+
+# 2. Update the description to highlight your paper, mentioning it builds on PnP-Flow
+description = "Code for Flower. Built on the PnP-Flow benchmark."
+
+# 3. Add yourself as the primary author, but keep the original authors out of respect
+authors = [
+    {name="Mehrsa Pourya", email="mehrsapo@gmail.com"},
+    {name="Anne Gagneux (Original PnP-Flow)"},
+    {name="Ségolène Martin (Original PnP-Flow)"},
+    {name="Paul Hagemann (Original PnP-Flow)"},
+]
+
+# 4. Change the license text to MIT
+license = {text = "MIT"}
+
+# 5. Add any NEW libraries your method uses to this list!
+# Note: torch and torchvision are managed by the conda environment (environment.yml)
+dependencies = [
+    "deepinv",
+    "gdown",
+    "kaggle",
+    "lpips",
+    "ml_collections",
+    "ninja",
+    "opencv-python",
+    "pytorch-ignite",
+    "torchdiffeq",
+    "torchmetrics",
+    "pandas",
+    "POT",
+    "scikit-image",
+    "wget",
+]
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "pnpflow.__version__"} # Consider changing 'pnpflow' if you rename the main python folder
+
+[tool.setuptools.packages.find]
+where = ["."]  
+
+[project.optional-dependencies]
+rectified = [
+    "jax",
+]

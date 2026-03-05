@@ -1,0 +1,11 @@
+{
+  "n_eval": 1,
+  "n_steps_eval": 80,
+  "psnr_flower_mean": 28.66302490234375,
+  "psnr_bicubic_mean": 25.024641036987305,
+  "psnr_gain": 3.6383838653564453,
+  "is_flower_mean": 1.0,
+  "is_flower_std": 0.0,
+  "is_bicubic_mean": 1.0,
+  "is_bicubic_std": 0.0
+}
