@@ -21,10 +21,13 @@ from scripts.gmm_flow_model import TimeConditionedMLP, sample_with_euler
 def train_flow_matching_gmm(
     *,
     output_dir: str | Path = "results/models_gmm",
+    data: dict | None = None,
     seed: int = 7,
     n_prior: int = 4000,
     n_posterior: int = 12000,
+    means: np.ndarray | None = None,
     cov_scalar: float = 0.0625,
+    h: np.ndarray | None = None,
     sigma_n: float = 0.25,
     y_clean: float = 1.0,
     batch_size: int = 256,
@@ -34,6 +37,8 @@ def train_flow_matching_gmm(
     depth: int = 3,
     device: str = "cpu",
     log_every: int = 50,
+    **kwargs,
+    
 ) -> dict:
     torch.manual_seed(seed)
     np.random.seed(seed)
@@ -42,18 +47,21 @@ def train_flow_matching_gmm(
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    means = np.asarray([[-0.25, -0.25], [-0.25, 0.25], [0.25, -0.25]], dtype=np.float64)
-    h = np.asarray([1.5, 1.5], dtype=np.float64)
-    data = generate_gmm_data(
-        seed=seed,
-        n_prior=n_prior,
-        n_posterior=n_posterior,
-        means=means,
-        cov_scalar=cov_scalar,
-        h=h,
-        sigma_n=sigma_n,
-        y_clean=y_clean,
-    )
+    if data is None:
+        if means is None:
+            means = np.asarray([[-0.25, -0.25], [-0.25, 0.25], [0.25, -0.25]], dtype=np.float64)
+        if h is None:
+            h = np.asarray([1.5, 1.5], dtype=np.float64)
+        data = generate_gmm_data(
+            seed=seed,
+            n_prior=n_prior,
+            n_posterior=n_posterior,
+            means=means,
+            cov_scalar=cov_scalar,
+            h=h,
+            sigma_n=sigma_n,
+            y_clean=y_clean,
+        )
 
     target = torch.tensor(data["posterior_samples"], dtype=torch.float32)
     loader = DataLoader(TensorDataset(target), batch_size=batch_size, shuffle=True, drop_last=True)
