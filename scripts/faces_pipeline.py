@@ -19,7 +19,6 @@ class LocalSuperresolution:
         out[:, :, 0 :: self.sf, 0 :: self.sf] = x
         return out
 
-
 class SingleImageDataset:
     def __init__(self, image):
         self.image = image
