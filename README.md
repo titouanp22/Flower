@@ -13,7 +13,7 @@ The goal is to **explain and visualize the 3-step FLOWER scheme**:
 
 The results are then compared with simple baselines.
 
-![Faces Example](results_examples/faces/flower_pretrained_superres_steps_dense_with_refs.png)
+![Faces Example](results_examples/faces/full_x2.png)
 
 ---
 
